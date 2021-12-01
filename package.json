@@ -1,0 +1,27 @@
+{
+  "name": "aoc2021",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "fmt": "eslint --fix ."
+  },
+  "bin": {
+    "aoc2021": "./index.js"
+  },
+  "author": "Alberto Coscia <alberto@albertocoscia.me>",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0"
+  },
+  "dependencies": {
+    "yargs": "^17.3.0"
+  },
+  "private": true
+}
