@@ -1,7 +1,14 @@
 export default (part, input) => {
-  input = input.toString().split(',').map(Number)
+  const days = part === 2 ? 256 : 80
+  const ages = input.toString().split(',').map(Number).reduce((t, e) => {
+    t[e]++
+    return t
+  }, new Array(9).fill(0))
 
-  for (let day = 0; day < 80; day++) input = input.map(t => t ? t - 1 : [6, 8]).flat()
+  for (let day = 0; day < days; day++) {
+    ages.push(ages.shift())
+    ages[6] += ages[8]
+  }
 
-  return input.length
+  return ages.reduce((t, e) => t + e, 0)
 }
