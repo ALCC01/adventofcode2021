@@ -2,7 +2,7 @@ export default (part, input) => {
   input = input.toString().split('\n').filter(e => e).map(e => e.split('').map(Number))
   let count = 0
 
-  for (let n = 0; n < 100; n++) {
+  for (let n = 0; ; n++) {
     input = input.map(l => l.map(o => o + 1))
 
     while (input.flat().some(v => v > 9)) {
@@ -14,10 +14,12 @@ export default (part, input) => {
       })
     }
 
-    count += input.flat().filter(v => v === 0).length
-  }
+    const flashes = input.flat().filter(v => v === 0).length
+    if (part === 2 && flashes === 100) return n + 1
 
-  return count
+    count += flashes
+    if (part === 1 && n === 99) return count
+  }
 }
 
 const neighbors = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
