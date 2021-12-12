@@ -7,12 +7,16 @@ export default (part, input) => {
       edges[to] = edges[to] ? [...edges[to], from] : [from]
     })
 
-  return paths('start', new Set())
+  return paths('start', new Set(), part === 2)
 }
 
-const paths = (from, visited) => {
+const paths = (from, visited, part2 = false, twice = false) => {
   if (from === 'end') return 1
-  if (visited.has(from) && from === from.toLowerCase()) return 0
+  if (from === 'start' && visited.size) return 0
+  if (visited.has(from) && from === from.toLowerCase()) {
+    if (!part2 || (part2 && twice)) return 0
+    if (part2) twice = true
+  }
 
-  return edges[from].reduce((n, to) => n + paths(to, new Set([...visited, from])), 0)
+  return edges[from].reduce((n, to) => n + paths(to, new Set([...visited, from]), part2, twice), 0)
 }
