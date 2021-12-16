@@ -1,11 +1,23 @@
 export default (part, input) => {
   input = hex2bin(input)
-  return reduce(packet(input)[0])
+  if (part === 1) return reduce(packet(input)[0])
+  else return evaluate(packet(input)[0])
 }
 
 const reduce = ({ type, version, payload }) => {
   if (type === 4) return version
   else return version + payload.map(reduce).reduce((t, e) => t + e, 0)
+}
+
+const evaluate = ({ type, payload }) => {
+  if (type === 0) return payload.map(evaluate).reduce((t, e) => t + e)
+  if (type === 1) return payload.map(evaluate).reduce((t, e) => t * e)
+  if (type === 2) return Math.min(...payload.map(evaluate))
+  if (type === 3) return Math.max(...payload.map(evaluate))
+  if (type === 4) return payload
+  if (type === 5) return evaluate(payload[0]) > evaluate(payload[1]) ? 1 : 0
+  if (type === 6) return evaluate(payload[0]) < evaluate(payload[1]) ? 1 : 0
+  if (type === 7) return evaluate(payload[0]) === evaluate(payload[1]) ? 1 : 0
 }
 
 const packet = (str) => {
