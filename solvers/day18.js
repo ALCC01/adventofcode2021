@@ -1,7 +1,12 @@
 export default (part, input) => {
   input = input.toString().trim().split('\n').map(e => e.trim())
 
-  return magnitude(input.reduce(add))
+  if (part === 1) return magnitude(input.reduce(add))
+
+  return input
+    .flatMap(p1 => input.map(p2 => [p1, p2])) // Generates all possible combinations
+    .map(p => magnitude(add(...p))) // Calculates their magnitudes
+    .reduce((t, e) => Math.max(t, e), 0)
 }
 
 const magnitude = (e) => {
@@ -49,5 +54,5 @@ function explode (s) {
   return s
 }
 
-// Splits numbers >10 into a pair
+// Splits numbers >=10 into a pair
 const split = (s) => s.replace(/([0-9]{2,})/, e => `[${Math.floor(e / 2)},${Math.ceil(e / 2)}]`)
